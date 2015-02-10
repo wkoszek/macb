@@ -45,6 +45,11 @@ def tools_run
 		system "xcodebuild"
 	}
 	Process.waitpid(child)
+	
+	obj_fn = "obj/Debug/#{$g_f_out}"
+	if File.exists?(obj_fn) then
+		File.rename(obj_fn, $g_f_out)
+	end
 end
 
 #-------------------------------------------------------------------------------
