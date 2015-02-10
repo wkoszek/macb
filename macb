@@ -1,0 +1,73 @@
+#!/usr/bin/env ruby
+# BSD v2
+# Copyright 2015 Wojciech A. Koszek <wkoszek@FreeBSD.czest.pl>
+
+$g_debug = 1
+$g_files = []
+$g_f_out = nil
+
+
+def usage
+	print "Usage:\n"
+	print "\tmacb <files>\n"
+	exit 0
+end
+
+def dbg(*args)
+	if $g_debug == 0 then
+		return
+	end
+	print "# ", *args
+end
+
+def obj_make
+	Dir.mkdir("obj") unless File.exists?("obj")
+end
+
+def cmake_create(f_out, f_inputs)
+	f_sources = ""
+	f_inputs.each do |i|
+		f_sources += " ../#{i}"
+	end
+	print "f_sources=#{f_sources}\n";
+
+	f = File.open("obj/CMakeLists.txt", "w")
+	f.write("cmake_minimum_required (VERSION 2.6)\n");
+	f.write("project (#{f_out})\n");
+	f.write("add_executable(#{f_out} #{f_sources})\n");
+	f.close()
+end
+
+def tools_run
+	child =	fork {
+		Dir.chdir("obj");
+		system "cmake", "-GXcode"
+		system "xcodebuild"
+	}
+	Process.waitpid(child)
+end
+
+#-------------------------------------------------------------------------------
+
+if ARGV.length <= 0 then
+	usage
+end
+
+#print ARGV.length , "\n"
+ARGV.each_with_index do |arg, idx|
+	if (arg =~ /\.c$/) or (arg =~ /\.h$/) or (arg=~ /\.m$/) then
+		if idx == 0 then
+			fn_ext = arg.split('.')
+			$g_f_out = fn_ext[0]
+			dbg "Will build '#{$g_f_out}' program\n"
+		end
+		dbg "Supported file #{arg}\n"
+		$g_files.push(arg)
+	else
+		print "# Unsupported file #{arg}, skipping...\n"
+	end
+end
+
+obj_make()
+cmake_create($g_f_out, $g_files)
+tools_run()
