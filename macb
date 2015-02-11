@@ -60,7 +60,8 @@ end
 
 #print ARGV.length , "\n"
 ARGV.each_with_index do |arg, idx|
-	if (arg =~ /\.c$/) or (arg =~ /\.h$/) or (arg=~ /\.m$/) then
+	if (arg =~ /\.c$/) or (arg =~ /\.h$/) or (arg =~ /\.m$/) or
+						(arg =~ /\.swift$/) then
 		if idx == 0 then
 			fn_ext = arg.split('.')
 			$g_f_out = fn_ext[0]
