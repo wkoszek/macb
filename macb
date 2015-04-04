@@ -37,7 +37,7 @@ def cmake_create(f_out, f_inputs)
 	f.write("add_executable(#{f_out} #{f_sources})\n");
 	f.close()
 
-	if !File.exists?("./makefile")
+	if !File.exists?("makefile")
 		f = File.open("makefile", "w")
 		f.write("all:\n");
 		f.write("\tmacb #{f_sources}\n");
