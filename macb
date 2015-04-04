@@ -42,7 +42,7 @@ def cmake_create(f_out, f_inputs)
 		f.write("all:\n");
 		f.write("\tmacb #{f_sources}\n");
 		f.write("clean:\n");
-		f.write("\t#{f_out}\n");
+		f.write("\trm -rf #{f_out} obj\n");
 		f.close()
 	else
 		print "# makefile exists. not rewriting"
