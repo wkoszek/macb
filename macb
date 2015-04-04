@@ -36,6 +36,17 @@ def cmake_create(f_out, f_inputs)
 	f.write("project (#{f_out})\n");
 	f.write("add_executable(#{f_out} #{f_sources})\n");
 	f.close()
+
+	if !File.exists?("./makefile")
+		f = File.open("makefile", "w")
+		f.write("all:\n");
+		f.write("\tmacb #{f_sources}\n");
+		f.write("clean:\n");
+		f.write("\t#{f_out}\n");
+		f.close()
+	else
+		print "# makefile exists. not rewriting"
+	end
 end
 
 def tools_run
