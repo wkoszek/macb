@@ -49,7 +49,7 @@ def cmake_create(f_out, f_inputs)
 	end
 end
 
-def tools_run
+def tools_run(f_out)
 	child =	fork {
 		Dir.chdir("obj");
 		system "cmake", "-GXcode"
@@ -57,9 +57,9 @@ def tools_run
 	}
 	Process.waitpid(child)
 	
-	obj_fn = "obj/Debug/#{$g_f_out}"
+	obj_fn = "obj/Debug/#{$f_out}"
 	if File.exists?(obj_fn) then
-		File.rename(obj_fn, $g_f_out)
+		File.rename(obj_fn, $f_out)
 	end
 end
 
@@ -87,4 +87,4 @@ end
 
 obj_make()
 cmake_create($g_f_out, $g_files)
-tools_run()
+tools_run($g_f_out)
