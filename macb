@@ -17,7 +17,7 @@ def dbg(*args)
 	if $g_debug == 0 then
 		return
 	end
-	print "# ", *args
+	print "# ", *args, "\n"
 end
 
 def obj_make
@@ -76,9 +76,9 @@ ARGV.each_with_index do |arg, idx|
 		if idx == 0 then
 			fn_ext = arg.split('.')
 			$g_f_out = fn_ext[0]
-			dbg "Will build '#{$g_f_out}' program\n"
+			dbg "Will build '#{$g_f_out}' program"
 		end
-		dbg "Supported file #{arg}\n"
+		dbg "Supported file #{arg}"
 		$g_files.push(arg)
 	else
 		print "# Unsupported file #{arg}, skipping...\n"
