@@ -4,8 +4,8 @@
 
 $g_debug = 1
 $g_files = []
+$g_flags = []
 $g_f_out = nil
-
 
 def usage
 	print "Usage:\n"
@@ -24,7 +24,10 @@ def obj_make
 	Dir.mkdir("obj") unless File.exists?("obj")
 end
 
-def cmake_create(f_out, f_inputs)
+def cmake_create(f_out, f_inputs, f_flags)
+	# flatten the array and make it string
+	str_f_flags = f_flags.map { |s| "'#{s}'" }.join(' ')
+
 	f_sources = ""
 	f_inputs.each do |i|
 		f_sources += " ../#{i}"
@@ -40,7 +43,7 @@ def cmake_create(f_out, f_inputs)
 	if !File.exists?("makefile")
 		f = File.open("makefile", "w")
 		f.write("all:\n");
-		f.write("\tmacb #{f_sources}\n");
+		f.write("\tmacb #{str_f_flags} #{f_sources}\n");
 		f.write("clean:\n");
 		f.write("\trm -rf #{f_out} obj\n");
 		f.close()
@@ -49,11 +52,14 @@ def cmake_create(f_out, f_inputs)
 	end
 end
 
-def tools_run(f_out)
+def tools_run(f_out, f_flags)
+	# flatten the array and make it string
+	str_f_flags = f_flags.map { |s| "'#{s}'" }.join(' ')
+
 	child =	fork {
 		Dir.chdir("obj");
 		system "cmake", "-GXcode"
-		system "xcodebuild"
+		system "xcodebuild #{str_f_flags}"
 	}
 	Process.waitpid(child)
 	
@@ -69,22 +75,38 @@ if ARGV.length <= 0 then
 	usage
 end
 
+$g_f_out = false
 #print ARGV.length , "\n"
 ARGV.each_with_index do |arg, idx|
+	print ">", arg, "\n"
 	if (arg =~ /\.c$/) or (arg =~ /\.h$/) or (arg =~ /\.m$/) or
 						(arg =~ /\.swift$/) then
-		if idx == 0 then
+		dbg "Parsing file: #{arg}"
+		if $g_f_out == false then
 			fn_ext = arg.split('.')
 			$g_f_out = fn_ext[0]
 			dbg "Will build '#{$g_f_out}' program"
 		end
 		dbg "Supported file #{arg}"
 		$g_files.push(arg)
+	elsif (arg =~ /^\-/) then
+		dbg "Finding flags! arg = #{arg}"
+		if (arg =~ /^\-D/) then
+			arg = arg[2 .. -1] + "=1"
+			dbg "Trimmer arg:", arg, "\n"
+		end
+		$g_flags.push(arg)
 	else
-		print "# Unsupported file #{arg}, skipping...\n"
+		print "# Unsupported file #{arg}, skipping..."
 	end
 end
+if $g_f_out == false then
+	print "you must specify output file!\n"
+	exit
+end
+
+dbg "flags", $g_flags
 
 obj_make()
-cmake_create($g_f_out, $g_files)
-tools_run($g_f_out)
+cmake_create($g_f_out, $g_files, $g_flags)
+tools_run($g_f_out, $g_flags)

@@ -7,5 +7,8 @@ main(int argc, char **argv)
 {
 
 	NSLog(@"macb Objective C sample program");
+#ifdef TESTPROG
+	NSLog(@"TESTPROG passed successfully!");
+#endif
 	return 0;
 }
