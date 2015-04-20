@@ -21,12 +21,15 @@ def dbg(*args)
 end
 
 def obj_make
-	Dir.mkdir("obj") unless File.exists?("obj")
+	if File.exists?("obj") then
+		system("rm -rf obj")
+	end
+	Dir.mkdir("obj")
 end
 
 def cmake_create(f_out, f_inputs, f_flags)
 	# flatten the array and make it string
-	str_f_flags = f_flags.map { |s| "'#{s}'" }.join(' ')
+	str_f_flags = f_flags.map { |s| "#{s}" }.join(' ')
 
 	f_sources = ""
 	f_inputs.each do |i|
@@ -54,18 +57,22 @@ end
 
 def tools_run(f_out, f_flags)
 	# flatten the array and make it string
-	str_f_flags = f_flags.map { |s| "'#{s}'" }.join(' ')
+	str_f_flags = f_flags.map { |s| "#{s}" }.join(' ')
+
+	dbg "tools_run: #{str_f_flags}"
 
 	child =	fork {
 		Dir.chdir("obj");
-		system "cmake", "-GXcode"
-		system "xcodebuild #{str_f_flags}"
+		system({"CFLAGS" => str_f_flags}, "cmake", "-GXcode")
+		system({"CFLAGS" => str_f_flags}, "xcodebuild")
 	}
 	Process.waitpid(child)
-	
-	obj_fn = "obj/Debug/#{$f_out}"
+
+	obj_fn = "./obj/Debug/#{f_out}"
+	dbg "tools_run, checking #{obj_fn}"
 	if File.exists?(obj_fn) then
-		File.rename(obj_fn, $f_out)
+		dbg "Rename f_out: #{f_out}"
+		File.rename(obj_fn, f_out)
 	end
 end
 
@@ -91,10 +98,6 @@ ARGV.each_with_index do |arg, idx|
 		$g_files.push(arg)
 	elsif (arg =~ /^\-/) then
 		dbg "Finding flags! arg = #{arg}"
-		if (arg =~ /^\-D/) then
-			arg = arg[2 .. -1] + "=1"
-			dbg "Trimmer arg:", arg, "\n"
-		end
 		$g_flags.push(arg)
 	else
 		print "# Unsupported file #{arg}, skipping..."
