@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # BSD v2
-# Copyright 2015 Wojciech A. Koszek <wkoszek@FreeBSD.czest.pl>
+# Copyright 2015 Wojciech A. Koszek <wojciech@koszek.com>
 
 $g_debug = 1
 $g_files = []
