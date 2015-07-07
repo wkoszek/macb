@@ -30,6 +30,7 @@ end
 def cmake_create(f_out, f_inputs, f_flags)
 	# flatten the array and make it string
 	str_f_flags = f_flags.map { |s| "#{s}" }.join(' ')
+	str_f_inputs = f_inputs.map { |s| "#{s}" }.join(' ')
 
 	f_sources = ""
 	f_inputs.each do |i|
@@ -46,7 +47,7 @@ def cmake_create(f_out, f_inputs, f_flags)
 	if !File.exists?("makefile")
 		f = File.open("makefile", "w")
 		f.write("all:\n");
-		f.write("\tmacb #{str_f_flags} #{f_sources}\n");
+		f.write("\tmacb #{str_f_flags} #{str_f_inputs}\n");
 		f.write("clean:\n");
 		f.write("\trm -rf #{f_out} obj\n");
 		f.close()
