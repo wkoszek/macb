@@ -1,3 +1,2 @@
 language: objective-c
-script:
-        - 
+script: make && make tests && make check
