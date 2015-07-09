@@ -3,6 +3,10 @@
 
 [![Build Status](https://travis-ci.org/wkoszek/macb.svg?branch=master)](https://travis-ci.org/wkoszek/macb)
 
+[![Code Climate](https://codeclimate.com/github/wkoszek/macb/badges/gpa.svg)](https://codeclimate.com/github/wkoszek/macb)
+
+[![Test Coverage](https://codeclimate.com/github/wkoszek/macb/badges/coverage.svg)](https://codeclimate.com/github/wkoszek/macb/coverage)
+
 ## Dependencies
 
 Xcode must be installed. Project has been tested with Xcode 6.
