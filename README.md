@@ -1,6 +1,7 @@
 # macb - Mac and iOS build tool
 
 
+[![Build Status](https://travis-ci.org/wkoszek/macb.svg?branch=master)](https://travis-ci.org/wkoszek/macb)
 
 ## Dependencies
 
