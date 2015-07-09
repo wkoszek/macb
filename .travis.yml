@@ -2,6 +2,7 @@ language: objective-c
 install:
         - gem install rubocop
         - gem install rake
+        - gem install codeclimate-test-reporter
         - bundle install
 rvm:
         - 2.1.0
