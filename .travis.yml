@@ -2,5 +2,5 @@ language: objective-c
 install: gem install rubocop
 rvm:
         - 2.1.0
-        - rbx-2.5.7
+        - rbx-2
 script: make && make tests && make check
