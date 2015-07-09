@@ -21,7 +21,7 @@ def dbg(*args)
 end
 
 def obj_make
-	if File.exists?("obj") then
+	if File.exist?("obj") then
 		system("rm -rf obj")
 	end
 	Dir.mkdir("obj")
@@ -44,7 +44,7 @@ def cmake_create(f_out, f_inputs, f_flags)
 	f.write("add_executable(#{f_out} #{f_sources})\n");
 	f.close()
 
-	if !File.exists?("makefile")
+	if !File.exist?("makefile")
 		f = File.open("makefile", "w")
 		f.write("all:\n");
 		f.write("\tmacb #{str_f_flags} #{str_f_inputs}\n");
@@ -71,7 +71,7 @@ def tools_run(f_out, f_flags)
 
 	obj_fn = "./obj/Debug/#{f_out}"
 	dbg "tools_run, checking #{obj_fn}"
-	if File.exists?(obj_fn) then
+	if File.exist?(obj_fn) then
 		dbg "Rename f_out: #{f_out}"
 		File.rename(obj_fn, f_out)
 	end
@@ -85,7 +85,7 @@ end
 
 $g_f_out = false
 #print ARGV.length , "\n"
-ARGV.each_with_index do |arg, idx|
+ARGV.each_with_index do |arg, _idx|
 	print ">", arg, "\n"
 	if (arg =~ /\.c$/) or (arg =~ /\.h$/) or (arg =~ /\.m$/) or
 						(arg =~ /\.swift$/) then

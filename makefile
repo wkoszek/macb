@@ -4,6 +4,8 @@ tests:
 	script -q test/sample_main.o.raw ./test/sample_main
 	cut -d " " -f 4- test/sample_main.o.raw | col -b > test/sample_main.o
 check:
+	@echo "# Static analysis (expecting no output now)"
+	rubocop -l macb
 	@echo "# Checking (expecting no output now)"
 	@diff -u test/sample_main.t test/sample_main.o
 clean:
