@@ -3,8 +3,11 @@ install:
         - gem install rubocop
         - gem install rake
         - gem install codeclimate-test-reporter
-        - bundle install
+#        - bundle install
 rvm:
         - 2.1.0
         - rbx-2
 script: make && make tests && make check
+engines:
+  rubocop:
+      enabled: true
