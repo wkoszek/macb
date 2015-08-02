@@ -1,7 +1,6 @@
 test/sample_main: test/sample_main.m test/sample_func.m
 	cd test && ../macb sample_main.m sample_func.m
 tests:
-	bundle exec rake
 	script -q test/sample_main.o.raw ./test/sample_main
 	cut -d " " -f 4- test/sample_main.o.raw | col -b > test/sample_main.o
 check:
