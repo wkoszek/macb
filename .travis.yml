@@ -7,9 +7,6 @@ install:
 rvm:
         - 2.1.0
         - rbx-2
-matrix:
-  allow_failures:
-      - rbx-2
 script: make && make tests && make check
 engines:
   rubocop:
