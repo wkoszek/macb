@@ -17,6 +17,12 @@ You also must have Cmake installed:
 
 ## Usage
 
+You can install `macb` from RubyGems:
+
+	gem install macb
+
+## Building from Github
+
 To clone:
 
 	git clone https://github.com/wkoszek/macb.git
@@ -25,7 +31,9 @@ There's no build necessary. You may want to add the macb/ directory to your path
 
 	set path=($path /where/is/macb/)
 
-To use:
+# How to use
+
+Usage is as follows:
 
 	./macb sample_main.m sample_func.m
 
