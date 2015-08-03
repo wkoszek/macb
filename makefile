@@ -8,5 +8,9 @@ check:
 	(cd bin && rubocop -l macb)
 	@echo "# Checking (expecting no output now)"
 	@diff -u test/sample_main.t test/sample_main.o
+rel:
+	gem build macb.gemspec
+relpush:
+	gem push *.gem
 clean:
 	rm -rf test/sample_main test/*.o test/*.raw test/{makefile,obj}
