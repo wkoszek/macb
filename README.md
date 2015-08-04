@@ -38,4 +38,4 @@ Usage is as follows:
 	./macb sample_main.m sample_func.m
 
 This will build ``sample_main`` program from 2 .m files ``sample_main.m`` and
-``sample_func.m``.
+``sample_func.m``
