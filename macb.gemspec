@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'macb'
-  s.version     = '1.0.0'
+  s.version     = '1.0.1'
   s.summary     = "CLI for creating Xcode projects"
   s.description = "CLI for createing Xcode projects"
   s.authors     = ["Wojciech A. Koszek"]
@@ -9,4 +9,5 @@ Gem::Specification.new do |s|
   s.files       = ["bin/macb"]
   s.executable	= "macb"
   s.license	= 'BSD'
+  s.require_paths = ['.']
 end
