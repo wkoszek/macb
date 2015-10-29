@@ -39,3 +39,8 @@ Usage is as follows:
 
 This will build ``sample_main`` program from 2 .m files ``sample_main.m`` and
 ``sample_func.m``
+
+# Author
+
+- Wojciech Adam Koszek, [wojciech@koszek.com](mailto:wojciech@koszek.com)
+- [http://www.koszek.com](http://www.koszek.com)
